@@ -32,47 +32,42 @@ Label_name.grid(row = 0, column = 0, padx = (10,5), pady = (10))
 enter_name = ttk.Entry(frame_input)
 enter_name.insert(0,'mew')
 enter_name.grid(row = 0, column = 1)
+# Define the labels for pokemon data
+
+label_pokemon_name = ttk.Label(frame_info)
+label_pokemon_name.grid(row=0, column=0, sticky=W)
+
+label_pokemon_type = ttk.Label(frame_info)
+label_pokemon_type.grid(row=1, column=0, sticky=W)
+
+label_pokemon_height = ttk.Label(frame_info)
+label_pokemon_height.grid(row=2, column=0, sticky=W)
+
+label_pokemon_weight = ttk.Label(frame_info)
+label_pokemon_weight.grid(row=3, column=0, sticky=W)
+
+label_pokemon_stats = ttk.Label(frame_stats)
+label_pokemon_stats.grid(row=0, column=0, sticky=W)
 
 def handle_button_get_info():
-     poke_name = enter_name.get().strip()
-     if poke_name == '': return
-     poke_info = get_pokemon_info(poke_name)
-     if poke_info:
-          label_height_value = [text] = str(poke_info['Height:']) + 'dm'
-          label_weight_value = [text] = str(poke_info['Weight:']) + 'hg'
-          types_list = [t['type']['name'].capitalize() for t in poke_info['types']]
-          label_type_value[t['type']]['name'].capitalize() for t in poke_info['types']]
-          label_type_value['text'] = ', '.join(types_list)
-          bar_hp['value'] = poke_info['stats'][0]['base_stat']
-          #
-          #
-          #
-      else:
-          error_msg = f"Unable to fetch information for" {poke_name.caitalize()} from the POKE_API.'
-          messagebox.showinfo(title='Error', message=err_msg, icon='error')
+    pokemon_name = enter_name.get()
+    try:
+        pokemon_data = get_pokemon_info(pokemon_name)
+        
+        # Updating the labels with the fetched data
 
-button_get_info = ttk.Button(frame_input, text='Get Info', command= handle_button_get_info)
-button_get_info.grid(row=0, column=2, padx=10, pady=10)
+        label_pokemon_name.configure(text=f"Name: {pokemon_data['name']}")
+        label_pokemon_type.configure(text=f"Type: {', '.join(pokemon_data['types'])}")
+        label_pokemon_height.configure(text=f"Height: {pokemon_data['height']}")
+        label_pokemon_weight.configure(text=f"Weight: {pokemon_data['weight']}")
+        label_pokemon_stats.configure(text=f"Stats: {pokemon_data['stats']}")
+    
+    except Exception as e:
+        messagebox.showerror(title="Error", message=str(e))
 
-# Populate the user input frame with widgets
+# Add the button
+button_get_info = ttk.Button(frame_input, text="Get Info", command=handle_button_get_info)
+button_get_info.grid(row=0, column=2, padx=(5,10))
 
-label_height = ttk.Label(frame_info, text = 'Height:')
-label_height.grid(row=0, column=0, padx=(10,5), pady=(10,5), sticky=E)
-label_height_volume = ttk.Label(frame_info, width=20)
-label_height_volume.grid(row=1, column=1,padx=(0,10),pady=(10,5), sticky=W)
-
-
-# Now populare the info frame with widgets here
-
-label_weight = ttk.Label(frame_info, text = 'Weight:')
-label_weight.grid(row=1, column=0, padx=(10,5), pady=(10,5), sticky=E)
-label_weight_volume = ttk.Label(frame_info, width=20)
-label_weight_volume.grid(row=1, column=1,padx=(0,10),pady=(10,5), sticky=W)
-
-
-
-
-
-# TODO: Define button click event handler function
-
+# Start the GUI loop
 root.mainloop()
