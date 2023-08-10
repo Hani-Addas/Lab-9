@@ -32,7 +32,7 @@ label_name = ttk.Label(frame_input, text="Pokemon Name:")
 label_name.grid(row=0, column=0, padx=(10,5), pady=10)
 
 enter_name = ttk.Entry(frame_input)
-enter_name.insert(0, 'Mew')
+enter_name.insert(0, 'pikachu')
 enter_name.grid(row=0, column=1)
 
 def handle_btn_get_info():
